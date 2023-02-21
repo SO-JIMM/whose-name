@@ -10,5 +10,6 @@ npm-debug.*
 *.orig.*
 web-build/
 src/data/names.json
+src/data/names-backup.json
 # macOS
 .DS_Store
