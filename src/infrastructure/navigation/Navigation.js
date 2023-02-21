@@ -1,6 +1,7 @@
 import React from "react"
 import { createDrawerNavigator } from "@react-navigation/drawer"
-import { HomeScreen } from "../../features/HomeScreen"
+import { WhoseNameScreen } from "../../features/whose-name/WhoseNameScreen"
+import { AboutScreen } from "../../features/about/AboutScreen"
 
 const Drawer = createDrawerNavigator()
 
@@ -13,12 +14,13 @@ export const Navigation = () => {
         },
         headerTintColor: "#ffffff",
         headerTitleStyle: {
-          fontWeight: "700",
+          fontWeight: "600",
           letterSpacing: 0.5,
         },
       }}
       initialRouteName='Home'>
-      <Drawer.Screen name='Whose Name?' component={HomeScreen} />
+      <Drawer.Screen name='Whose Name?' component={WhoseNameScreen} />
+      <Drawer.Screen name='About' component={AboutScreen} />
     </Drawer.Navigator>
   )
 }

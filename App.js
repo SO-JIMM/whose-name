@@ -1,7 +1,7 @@
 import React from "react"
 import { NativeBaseProvider, StatusBar } from "native-base"
 import { NavigationContainer } from "@react-navigation/native"
-import { SafeAreaBox } from "./src/components/SafeAreaBox"
+import { SafeAreaBox } from "./src/components/safe-area-box/SafeAreaBox"
 import { Navigation } from "./src/infrastructure/navigation/Navigation"
 import { AppContextProvider } from "./src/context/AppContext"
 

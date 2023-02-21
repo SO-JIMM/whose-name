@@ -1,11 +1,21 @@
 import React, { createContext, useState, useContext } from "react"
 import { pickRandomNickname } from "../utils/pickRandomNickname"
+import { useEffect } from "react"
 
 export const AppContext = createContext()
 
 export const AppContextProvider = ({ children }) => {
   const [currentName, setCurrentName] = useState(null)
   const [selectedAnswer, setSelectedAnswer] = useState(null)
+  const [checkResult, setCheckResult] = useState(false)
+
+  const submitAnswer = () => {
+    setCheckResult(true)
+  }
+
+  const clearSubmit = () => {
+    setCheckResult(false)
+  }
 
   const getNewRandomNickname = () => {
     const newName = pickRandomNickname()
@@ -13,7 +23,7 @@ export const AppContextProvider = ({ children }) => {
     setCurrentName(newName)
   }
 
-  const setNewAnswerGuess = (answer) => {
+  const onChangeAnswer = (answer) => {
     setSelectedAnswer(answer)
   }
 
@@ -21,12 +31,24 @@ export const AppContextProvider = ({ children }) => {
     setSelectedAnswer(null)
   }
 
+  const startNewGuess = () => {
+    const newName = pickRandomNickname()
+    setSelectedAnswer(null)
+    setCurrentName(newName)
+  }
+
   let senderName = currentName?.sender_name ?? null
 
   let isCorrectAnswer =
-    !!currentName?.sender_name &&
-    selectedAnswer &&
-    selectedAnswer === currentName.sender_name
+    senderName && selectedAnswer && selectedAnswer === senderName
+
+  let currentNickname = currentName?.content ?? ""
+
+  useEffect(() => {
+    if (!currentName?.content) {
+      startNewGuess()
+    }
+  }, [])
 
   return (
     <AppContext.Provider
@@ -36,8 +58,13 @@ export const AppContextProvider = ({ children }) => {
         getNewRandomNickname,
         clearAnswer,
         isCorrectAnswer,
-        setNewAnswerGuess,
         senderName,
+        startNewGuess,
+        currentNickname,
+        onChangeAnswer,
+        checkResult,
+        clearSubmit,
+        submitAnswer,
       }}>
       {children}
     </AppContext.Provider>
