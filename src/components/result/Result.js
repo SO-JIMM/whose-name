@@ -1,34 +1,71 @@
 import React, { useContext } from "react"
-import {
-  Text,
-  Button,
-  Center,
-  Alert,
-  VStack,
-  HStack,
-  IconButton,
-  Box,
-  CloseIcon,
-} from "native-base"
+import { Text, Button, AlertDialog, Alert, Heading } from "native-base"
 import { AppContext } from "../../context/AppContext"
 
 export const Result = () => {
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  const onClose = () => setIsOpen(false)
+
+  const cancelRef = React.useRef(null)
   const {
     isCorrectAnswer,
-    checkResult,
-    submitAnswer,
-    clearSubmit,
+
+    startNewGuess,
     selectedAnswer,
   } = useContext(AppContext)
 
+  const handleNext = () => {
+    startNewGuess()
+    onClose()
+  }
+
   return (
     <>
-      <Button disabled={!selectedAnswer} onPress={submitAnswer}>
+      <Button
+        bg='gray.600'
+        variant={!selectedAnswer ? "unstyled" : "solid"}
+        color='white'
+        isDisabled={!selectedAnswer}
+        onPress={() => setIsOpen(!isOpen)}>
         Submit
       </Button>
-
-      {checkResult && (
-        <Alert maxW='400' status={isCorrectAnswer ? "success" : "error"}>
+      <AlertDialog
+        safeAreaTop={true}
+        leastDestructiveRef={cancelRef}
+        isOpen={isOpen}
+        onClose={onClose}>
+        <AlertDialog.Content marginBottom='auto' marginTop='40%'>
+          <AlertDialog.Body>
+            <Alert status={isCorrectAnswer ? "success" : "error"}>
+              {isCorrectAnswer ? (
+                <Heading>Correct!</Heading>
+              ) : (
+                <Text>Incorrect!</Text>
+              )}
+            </Alert>
+          </AlertDialog.Body>
+          <AlertDialog.Footer>
+            <Button.Group w='full' justifyContent='space-around' space={2}>
+              <Button
+                isDisabled={!!isCorrectAnswer}
+                variant='unstyled'
+                colorScheme='coolGray'
+                onPress={onClose}
+                ref={cancelRef}>
+                Try Again
+              </Button>
+              <Button
+                colorScheme={isCorrectAnswer ? "success" : "error"}
+                onPress={handleNext}>
+                Continue
+              </Button>
+            </Button.Group>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog>
+      {/* {checkResult && (
+        <Alert status={isCorrectAnswer ? "success" : "error"}>
           <VStack space={2} flexShrink={1} w='100%'>
             <HStack
               flexShrink={1}
@@ -63,7 +100,7 @@ export const Result = () => {
             </Box>
           </VStack>
         </Alert>
-      )}
+      )} */}
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { Box, Center } from "native-base"
+import { Box } from "native-base"
 import React from "react"
 import { Result } from "../../components/result/Result"
 import { AnswerOptions } from "../../components/answer-options/AnswerOptions"
@@ -6,14 +6,22 @@ import { CurrentNickname } from "../../components/current-nickname/CurrentNickna
 
 export const WhoseNameScreen = () => {
   return (
-    <Box flex={1} p={4} bg='muted.50'>
-      <Center p={4} m={4}>
+    <Box p={4} alignItems='center' justifyContent='center'>
+      <Box
+        mt={6}
+        bg='muted.200'
+        height='md'
+        justifyContent='space-between'
+        borderWidth={1}
+        borderColor='coolGray.700'
+        borderRadius={8}
+        width='xs'>
         <CurrentNickname />
-      </Center>
-
-      <AnswerOptions />
-
-      <Result />
+        <AnswerOptions />
+        <Box justifyContent='space-between' p={4}>
+          <Result />
+        </Box>
+      </Box>
     </Box>
   )
 }

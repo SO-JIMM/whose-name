@@ -18,6 +18,9 @@ export const Navigation = () => {
           fontWeight: "600",
           letterSpacing: 0.5,
         },
+
+        drawerActiveBackgroundColor: "#8b8b8b",
+        drawerActiveTintColor: "white",
       }}
       initialRouteName='Home'>
       <Drawer.Screen name='Whose Name?' component={WhoseNameScreen} />
